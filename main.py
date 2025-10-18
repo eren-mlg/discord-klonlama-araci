@@ -1,4 +1,4 @@
-mytitle = "cimidi Sunucu Klonlama Aracı"
+mytitle = "Sunucu Kopyalama Aracı"
 from os import system
 system("title "+mytitle)
 import psutil
@@ -20,22 +20,31 @@ if os == "Windows":
 else:
     system("clear")
     print(chr(27) + "[2J")
-print(f"""{Fore.RED}<
+from colorama import Fore, Style, init
+import time
+init(autoreset=True)
+ascii_art = '''
 
 
-██████╗██╗███╗   ███╗██╗██████╗ ██╗
-██╔════╝██║████╗ ████║██║██╔══██╗██║
-██║     ██║██╔████╔██║██║██║  ██║██║
-██║     ██║██║╚██╔╝██║██║██║  ██║██║
-╚██████╗██║██║ ╚═╝ ██║██║██████╔╝██║
- ╚═════╝╚═╝╚═╝     ╚═╝╚═╝╚═════╝ ╚═╝
-
-                   cimidi - Biz bu sporu yapıyoruz kankam <3
-{Style.RESET_ALL}
-        """)
-token = input(f'Token Url:\n >')
-guild_s = input('Aktarılan Sunucu ID:\n >')
-guild = input('Aktarım Sağlanan Sunucu ID:\n >')
+ /$$   /$$  /$$$$$$  /$$$$$$$  /$$$$$$$$ /$$$$$$  /$$   /$$ /$$$$$$$  /$$$$$$$$ /$$     /$$ /$$$$$$    /$$  
+| $$  /$$/ /$$__  $$| $$__  $$|__  $$__//$$__  $$| $$$ | $$| $$__  $$| $$_____/|  $$   /$$//$$$_  $$ /$$$$  
+| $$ /$$/ | $$  \ $$| $$  \ $$   | $$  | $$  \ $$| $$$$| $$| $$  \ $$| $$       \  $$ /$$/| $$$$\ $$|_  $$  
+| $$$$$/  | $$$$$$$$| $$$$$$$/   | $$  | $$$$$$$$| $$ $$ $$| $$$$$$$ | $$$$$     \  $$$$/ | $$ $$ $$  | $$  
+| $$  $$  | $$__  $$| $$____/    | $$  | $$__  $$| $$  $$$$| $$__  $$| $$__/      \  $$/  | $$\ $$$$  | $$  
+| $$\  $$ | $$  | $$| $$         | $$  | $$  | $$| $$\  $$$| $$  \ $$| $$          | $$   | $$ \ $$$  | $$  
+| $$ \  $$| $$  | $$| $$         | $$  | $$  | $$| $$ \  $$| $$$$$$$/| $$$$$$$$    | $$   |  $$$$$$/ /$$$$$$
+|__/  \__/|__/  |__/|__/         |__/  |__/  |__/|__/  \__/|_______/ |________/    |__/    \______/ |______/
+                                                                                                            
+                                                                                                            
+                                                                                                            
+'''
+colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.BLUE, Fore.MAGENTA]
+for i, line in enumerate(ascii_art.split('\n')):
+    print(colors[i % len(colors)] + line)
+    time.sleep(0.1)
+token = input(f'Tokeninizi Giriniz:\n >')
+guild_s = input('Kopyalanacak  Sunucu ID:\n >')
+guild = input('Aktarılıcak Sunucu ID:\n >')
 input_guild_id = guild_s
 output_guild_id = guild
 token = token
@@ -47,8 +56,8 @@ print("  ")
 @client.event
 async def on_ready():
     extrem_map = {}
-    print(f"Olarak giriş yaptı : {client.user}")
-    print("Aktarım Başladı...")
+    print(f"Hesabına Giriş Başarılı : {client.user}")
+    print("Aktarımı Başlatıyorum")
     guild_from = client.get_guild(int(input_guild_id))
     guild_to = client.get_guild(int(output_guild_id))
     await Clone.guild_edit(guild_to, guild_from)
@@ -58,7 +67,7 @@ async def on_ready():
     await Clone.categories_create(guild_to, guild_from)
     await Clone.channels_create(guild_to, guild_from)
     print(f"""{Fore.GREEN}
-          Aktarım Tamamlandı...
+          Aktarım Bitti
     {Style.RESET_ALL}""")
     await asyncio.sleep(5)
     client.close()

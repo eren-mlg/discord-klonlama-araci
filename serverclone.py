@@ -174,9 +174,9 @@ class Clone:
                 await emoji.delete()
                 print_delete(f"Silinen Emoji: {emoji.name}")
             except discord.Forbidden:
-                print_error(f"Emoji Silinirken Hata Oluştu AMK{emoji.name}")
+                print_error(f"Emoji Silinirken Hata  {emoji.name}")
             except discord.HTTPException:
-                print_error(f"Emoji Silinirken Hata Oluştu AMK {emoji.name}")
+                print_error(f"Emoji Silinirken Hata   {emoji.name}")
 
     @staticmethod
     async def emojis_create(guild_to: discord.Guild, guild_from: discord.Guild):
@@ -189,9 +189,9 @@ class Clone:
                     image=emoji_image)
                 print_add(f"Oluşturulan Emoji {emoji.name}")
             except discord.Forbidden:
-                print_error(f"Emoji Oluştururken Hata AMK {emoji.name} ")
+                print_error(f"Emoji Oluştururken   {emoji.name} ")
             except discord.HTTPException:
-                print_error(f"Emoji Oluştururken Hata AMK {emoji.name}")
+                print_error(f"Emoji Oluştururken   {emoji.name}")
 
     @staticmethod
     async def guild_edit(guild_to: discord.Guild, guild_from: discord.Guild):
@@ -199,7 +199,7 @@ class Clone:
             try:
                 icon_image = await guild_from.icon_url.read()
             except discord.errors.DiscordException:
-                print_error(f"Simge görüntüsü okunamıyor AMK {guild_from.name}")
+                print_error(f"Simge görüntüsü   {guild_from.name}")
                 icon_image = None
             await guild_to.edit(name=f'{guild_from.name}')
             if icon_image is not None:
